@@ -24,6 +24,7 @@ In this code, I used servo numbers 5 and 6 from the ServoBlaster library, which 
 You can google "ServoBlaster" and find the appropriate github if you want to learn more about the ServoBlaster library, but the servo numbers and GPIO pins are as follows:
 
 Servo Number -> GPIO Number
+
 0-->4
 
 1-->17
