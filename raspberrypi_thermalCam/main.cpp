@@ -17,7 +17,7 @@ int main( int argc, char **argv )
 	//create the app
 	QApplication a( argc, argv );
 	LeptonThread *thread = new LeptonThread(); //create object
-	//thread->enable(); //YOU MUST ENABLE BEFORE START THREAD 
+	//thread->enable(); //must enable before starting the thread. Uncomment method in LeptonThread.cpp 
 	thread->start();  
 	return a.exec();
 }

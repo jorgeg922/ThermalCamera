@@ -30,20 +30,20 @@ void LeptonThread::run()
 {	
 	SpiOpenPort(0); //open SpiPort to start reading packets
 	int startingHorPulseInt = 150; //starting pulse set at 90 degrees at the beginning
-	string startingHorPulse = convertToString(startingHorPulseInt); //convert the integer to string to be sent
+	string startingHorPulse = convertToString(startingHorPulseInt); //convert the integer to string to be sent with sys command
 	ServoBlaster(startingHorPulse, 1); //send the command by calling system
 
 	int startingVerPulseInt = 100; //starting pulse for vertical movements
 	string startingVerPulse = convertToString(startingVerPulseInt);
 	ServoBlaster(startingVerPulse, 2);
 	
-	int horspeedServo = 0; // speedServo will be used to later rectify the position of the camera (horizontal)
-	int verspeedServo = 0; // speed for vertical positioning
-	double max_cal_temp = 0; // variable to the calibrated temperature
+	int horspeedServo = 0; //horspeedServo will be used to modify the speed at which the camera moves horizontally
+	int verspeedServo = 0; //speed for vertical positioning
+	double max_cal_temp = 0; //variable for the maximum calibrated temperature
 	//double min_cal_temp = 0;//uncomment if using min temperature
-	int frameCount = 0;// dummy to count the number of frames in order to move the camera
+	int frameCount = 0;//dummy to count the number of frames gone through
 	
-	while(true) { //main while loop //while true
+	while(true) { //main while loop
 		//read data packets from lepton over SPI
 		int resets = 0;
 		for(int j=0;j<PACKETS_PER_FRAME;j++) {
@@ -67,7 +67,7 @@ void LeptonThread::run()
 		
 		frameBuffer = (uint16_t *)result;
 		int row, column, maxValue_Col, maxValue_Row;
-		//string newAngle, prevAngle;//not currently used
+		//string newAngle, prevAngle; //not currently used
 		uint16_t value;
 		uint16_t minValue = 65535;
 		uint16_t maxValue = 0;
@@ -85,8 +85,8 @@ void LeptonThread::run()
 			value = frameBuffer[i];
 
 			if(value > maxValue) { //obtain the most current max value
-				maxValue_Col = i% PACKET_SIZE_UINT16 - 2;//obtain column position
-				maxValue_Row = i / PACKET_SIZE_UINT16; //obtain row position
+				maxValue_Col = i% PACKET_SIZE_UINT16 - 2;//obtain column number
+				maxValue_Row = i / PACKET_SIZE_UINT16; //obtain row number
 				//speed for horizontal movement
 				if(abs(maxValue_Col-40) >= 20){//if the max value is more than 20 pixels away from the middle
 					horspeedServo = 14;//then the speed is set at 14 movements using ServoBlaster library
@@ -95,7 +95,7 @@ void LeptonThread::run()
 				}
 				//speed for vertical movement
 				if(abs(maxValue_Row-30) >= 15){
-					verspeedServo = 10; //for now (need calculation)
+					verspeedServo = 10; //for now (need angle calculation for vertical field of vision)
 				}
 				else{
 					verspeedServo = 2;
@@ -103,12 +103,12 @@ void LeptonThread::run()
 				maxValue = value; //maxValue for the current frame
 			}
 			if(value < minValue) {
-				minValue = value; //minsValue for the current frame (currently not using minValue for anything)
+				minValue = value; //minValue for the current frame (currently not using minValue for anything)
 			}
 			column = i % PACKET_SIZE_UINT16 - 2;
 			row = i / PACKET_SIZE_UINT16 ;
 		}
-		if(frameCount == 81){ //at 135 frames, then move the camera. 135 frames = 5 seconds (27fps)			
+		if(frameCount == 81){ //at 81 frames, then move the camera. 81 frames = 3 seconds (27fps)			
 			//qDebug()<<"Column Number";
 			//qDebug()<<maxValue_Col;
 			//qDebug()<<"row Number";
@@ -141,22 +141,23 @@ void LeptonThread::run()
 				}
 			}
 			//qDebug()<<"Horizontal:";
-			//qDebug()<<startingHorPulseInt;// announcing the speed (can be commented out if needed)
+			//qDebug()<<startingHorPulseInt; // announcing the speed (can be commented out if needed)
 			//qDebug()<<"Vertical:";
 			//qDebug()<<startingVerPulseInt;
-			///pick up here
+			
+			
 			double internal_tmp_k = LeptonAuxTemp(); //get the internal temperature of the camera in Kelvin
-			////////////////////////////////////////
-        	////////////////////////////////////////
-        	//Formula to calculate the actual temeprature of the maxValue. The formula was derived by performing
+			
+        	
+        	//Formula to calculate the actual temperature of the maxValue. The formula was derived by performing
         	//a linear regression using actual temperature as the dependent variable and internal temperature
         	//and raw value of the maxValue from the camera as independent variables. While the results are accurate when
-        	//used under room temperature, it fails to readjust over other ranges. Need to sample more data and use ambient
+        	//used under room temperature, it fails to readjust in other environments. Need to sample more data and use ambient
         	//temperature as another variable. Also, might need to calculate distance of the pixel and add it as well.
+
         	max_cal_temp = ((110.78*internal_tmp_k)+(0.08*maxValue)-33745.3)+(0.2*((110.78*internal_tmp_k)+(0.08*maxValue)-33745.3));
-        	////////////////////////////////////////
-        	////////////////////////////////////////
-        	////////////////////////////////////////
+        	
+        	
       		if(max_cal_temp > 570){
         		tempWarning();
         		firePresence(true);
