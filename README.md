@@ -6,7 +6,7 @@ a simple tracking and detection system of high temperatures with a FLIR Lepton 2
 If not familiar with the sample code from Sparkfun, the files have also been included in this
 folder, so you can get familiar with the original code. It can found inside "raspberrypi_video"
 
-The modification to the original sample code can be found in "raspberrypi_ThermalCam"
+The modification to the original sample code can be found in "raspberrypi_ThermalCam". Most of the modifications will be found in LeptonThread.cpp and .h
 
 Hookup Guide:
 
