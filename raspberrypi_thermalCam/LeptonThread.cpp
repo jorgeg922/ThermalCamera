@@ -1,3 +1,6 @@
+//Author: Jorge G.
+//Last updated: September 18, 2017
+
 #include <iostream>
 #include <string>
 #include <fstream>

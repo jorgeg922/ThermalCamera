@@ -1,4 +1,4 @@
-# ThermalCamera FLIR LEPTON 2.0 Shuttered
+# Thermal Camera FLIR LEPTON 2.0 Shuttered
 
 Expanding upon the sample code provided by Sparkfun, this code will further implement
 a simple tracking and detection system of high temperatures with a FLIR Lepton 2.0.
