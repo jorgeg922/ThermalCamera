@@ -8,6 +8,7 @@ I developed this project due to the lack of information and methods to track hig
 NOTE: In implementing this project I made use of two other repositories, namely one from Pure Engineering who developed the sample code for the FLIR Lepton and richardghirst who developed the ServoBlaster library. Their repositories can be found at the following links:
 
 https://github.com/richardghirst
+
 https://github.com/groupgets/LeptonModule
 
 The code from Pure Engineering was used primarily as a starting point to write the program to detect high temperatures. In particular, the file LeptonThread.cpp has been heavily modified and I have extensively commented the code to understand the changes made.
