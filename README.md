@@ -15,7 +15,7 @@ The code from Pure Engineering was used primarily as a starting point to write t
 The ServoBlaster library has been used in order to control a pan-tilt bracket that aids the camera in looking towards the correct direction to the highest temperature in its field of vision.
 
 
----------------------------------- HOOKUP GUIDE ----------------------------------
+#---------------------------------- HOOKUP GUIDE ----------------------------------
 
 In order to hook up the FLIR Lepton to the Raspberry Pi B+, refer to the sparkfun website:
 
@@ -23,14 +23,14 @@ https://learn.sparkfun.com/tutorials/flir-lepton-hookup-guide
 
 NOTE: Be aware that the CS pin location from the raspberry pi used in the sparkfun guide differs from the CS pin in the RPI B+ because it counts with an expanded set of GPIO pins. Google the appropriate image to find the correct CS pin. 
 
-Raspberry Pi & FLIR Lepton--------------------------------------------------------
+#Raspberry Pi & FLIR Lepton--------------------------------------------------------
 
 The hookup guide from Sparkfun should be anough to help you hookup the FLIR camera to the RPi.
 The only thing that needs to be hooked up from here on are the two servos that will be used as part of the tracking and centering system to point to the highest temperature in the camera's field of vision.
 At this point, it is a good idea to set up the pan-tilt if you have not and attach the camera to the front.
 Refer to the the images inside the appropriate folder for guidance.
 
-ServoBlaster Library---------------------------------------------------------------
+#ServoBlaster Library---------------------------------------------------------------
 
 In this project, I used servo numbers 5 and 6 from the ServoBlaster library, which correspond to GPIO pins 23 and 24 from the RPi B+ respectively. These pins need to be attached to the servo's PWM signal pins. There is no particular reason why I chose to use these pins besides the fact that at the time I was writing this code, I was using the other pins for something else.
 
@@ -59,7 +59,7 @@ Finally, navigate inside the PiBits>ServoBlaster>User. In this folder you will f
 
 This will enable the library, which will be later used by leptonThread.cpp
 
-Heat Detection Program---------------------------------------------------------------
+#Heat Detection Program---------------------------------------------------------------
 
 Having hooked up all the components together and executed the ServoBlaster library, the only thing left to do is execute the camera's heat detection program.
 
@@ -67,7 +67,7 @@ Navigate inside the raspberrypi_thermalCam and type: qmake && make
 
 This will create the executable file, which you can then run it.
 
-Heat Detection Algorithm--------------------------------------------------------------
+#Heat Detection Algorithm--------------------------------------------------------------
 
 As mentioned before, this project implements an algorithm to estimate the temperature in fahrenheit of the highest object within its field of vision. This algorithm was developed using a simple linear regression formula using the raw output of the camera as a baseline. Although the temperature was accurate for the room where I developed this algorithm, it might not be for the place where you are located. If you know how to run a regression, you can modify the formula accordingly within the source code.
 
