@@ -1,6 +1,4 @@
-# Track-N-Lock
-# Thermal Camera FLIR LEPTON 2.0 Shuttered
-# Heat detection & tracking
+# Track-N-Lock (Heat detection & tracking)
 
 In this project, I have developed and implemented an algorithm to detect and track the highest temperature within a camera's field of vision - in this case a FLIR Lepton 2.0
 
