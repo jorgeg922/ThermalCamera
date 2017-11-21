@@ -1,8 +1,8 @@
 # Track-N-Lock (Heat detection & tracking)
 
-In this project, I developed and implemented an algorithm to detect and track heat source within a camera's field of vision - in this case a FLIR Lepton 2.0
+In this project, I developed and implemented an algorithm to detect and track the highest heat source within a camera's field of vision - in this case a FLIR Lepton 2.0
 
-I developed this project due to the lack of information and methods to track high temperature objects using this particular camera. Although FLIR Lepton 2.1 comes with a factory method to identify high temperatures, FLIR Lepton 2.0 does not, and therefore decided to write this program to try address the issue.
+I developed this project due to the lack of information and methods to track high temperature objects using this particular camera. Although FLIR Lepton 2.1 comes with a factory method to identify high temperatures, FLIR Lepton 2.0 does not, and therefore decided to write this program to address the issue.
 
 NOTE: In implementing this project I made use of two other repositories, namely one from Pure Engineering who developed the sample code for the FLIR Lepton and richardghirst who developed the ServoBlaster library. Their repositories can be found at the following links:
 
@@ -70,4 +70,4 @@ This will create an executable file, which you can then run.
 
 As mentioned before, this project implements an algorithm to estimate the source of the highest temperature object (in fahrenheit) within the camera's field of vision. This algorithm was developed using a linear regression formula using the raw output of the camera as a baseline. Although the temperature was accurate for the room where I developed this algorithm, it might not be for the place where you are located. If you know how to run a regression, you can modify the formula accordingly within the source code.
 
-You must also take into account that there are other factors that affect temperature such as the environmental and internal temperature of the camera, so even after running a regression with the raw outputs of the camera, the output might not be accurate when taken to other places. You need to think of the other factors affecting temperature and add those sensors to your implementation if you want more accurate results.
+You must also take into account that there are other factors that affect temperature such as the environmental and internal temperature of the camera, reflection, and disance, so even after running a regression with the raw outputs of the camera, the output might not be accurate when taken to other places. You need to think of the other factors affecting temperature and add those sensors to your implementation if you want more accurate results.
